@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    background: #000000;
+}
+.container{
+    --light-colr: #fff;
+    height: 420px;
+    width: 350px;
+    background: #fff;
+    position: fixed;
+    bottom: 50px;
+    right: 10px;
+    border-radius: 22px;
+    
+}
+
+.chat-header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0px 10px;
+    background-color: #ecb100;
+    color: var(--light-colr);
+    font-size: 1.5rem;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.chat-body{
+    height: 300px;
+    display: flex;
+}
+
+.chat-input{
+    height: 60px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ccc;
+}
+
+.input-sec{
+    flex: 9;
+}
+
+.send{
+    flex: 1;
+    padding-right: 4px;
+}
+
+#txtInput{
+    line-height: 30px;
+    padding: 8px 10px;
+    border: none;
+    outline: none;
+    caret-color: black;
+    font-size: 1rem;
+    width: 100%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
