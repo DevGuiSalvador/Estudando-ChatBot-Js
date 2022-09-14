@@ -1,6 +1,11 @@
+import chatBotService from "./chatbotservice.js";
+
 const chatBody = document.querySelector(".chat-body");
 const txtInput = document.querySelector("#txtInput");
 const send = document.querySelector(".send");
+const loadingEle = document.querySelector(".loading")
+const chatHeader = document.querySelector(".chat-header");
+const container = document.querySelector(".container")
 
 send.addEventListener("click", () => renderUserMessage());
 
@@ -10,39 +15,62 @@ txtInput.addEventListener("keyup", (event) => {
     }
 });
 
+chatHeader.addEventListener("click", () =>{
+    container.classList.toggle("collapse");
+});
+
 const renderUserMessage = () => {
     const userInput = txtInput.value;
     renderMessageEle(userInput, "user");
     txtInput.value = "";
-    setTimeout(() => {
-        renderChatbotResponse(userInput);
-        setCrollPosition();
-    }, 600);
+    toggleLoading(false);
+    renderChatbotResponse(userInput);
 };
 
 const renderChatbotResponse = (userInput) => {
     const res=getChatbotResponse(userInput);
-    renderMessageEle(res);
 }
 
 const renderMessageEle = (txt, type) => {
-        let className = "user-message";
-        if(type !== "user"){
-            className = "chatbot-message";
-        }
+    let className = "user-message";
     const messageEle = document.createElement("div");
     const txtNode = document.createTextNode(txt);
-    messageEle.classList.add(className);
     messageEle.append(txtNode);
-    chatBody.append(messageEle);
+    
+    if(type !== "user"){
+        className = "chatbot-message";
+        messageEle.classList.add(className);
+        const botResponseContainer = document.createElement("div");
+        botResponseContainer.classList.add("bot-response-container");
+        const botImg = document.createElement("img");
+        botImg.setAttribute("src","./images/thorigbot.png");
+        botResponseContainer.append(botImg);
+        botResponseContainer.append(messageEle);
+        chatBody.append(botResponseContainer);
+    }else{
+        messageEle.classList.add(className);
+        chatBody.append(messageEle);
+    }
+    
 };
 
 const getChatbotResponse = (userInput) => {
-    return responseObj[userInput] == undefined?"Fala portugues alienigena":responseObj[userInput];
+    chatBotService
+    .getBotResponse(userInput)
+    .then((response) => {
+        renderMessageEle(response);
+        setScrollPosition();
+        toggleLoading(true);
+    })
+    .catch(error => {
+        toggleLoading(true);
+    })
 };
 
-const setCrollPosition = () => {
+const setScrollPosition = () => {
     if(chatBody.scrollHeight > 0){
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 }
+
+const toggleLoading = (show) => loadingEle.classList.toggle("hide", show)
