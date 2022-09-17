@@ -1,5 +1,5 @@
 const responseObj = {
     Chifrudo: "OH porra",
-    pat: "Tira a mão de mim.",
+    pat: "Tira a mão de mim",
     
 };
